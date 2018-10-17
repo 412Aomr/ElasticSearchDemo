@@ -459,7 +459,7 @@ public class ElasticsearchUtil {
         while (response.getHits().getHits().length > 0) {
             String scrollId = response.getScrollId();
             response = client.prepareSearchScroll(scrollId)
-                    .setScroll(TimeValue.timeValueMinutes(3))//设置查询context的存活时间
+                    .setScroll(TimeValue.timeValueMinutes(1))//设置查询context的存活时间
                     .execute()
                     .actionGet();
             SearchHits hits = response.getHits();
