@@ -1,0 +1,9 @@
+swagger:
+  name: LHL
+  url: LHLLAB
+  email: 1054868512@qq.com
+  title:  ES-Dome
+  terms-of-service-url: https://github.com/412Aomr
+  license:  apach 2.0
+  licenseUrl:  www.anquanhuang.com
+  version:  1.0
