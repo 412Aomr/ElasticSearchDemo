@@ -386,7 +386,7 @@ public class ElasticsearchUtil {
             if (searchResponse.status().getStatus() == 200){
                 //使用scrollId迭代查询
                 List<Map<String, Object>> result = disposeScrollResult(searchResponse, highlightField);
-                List<Map<String, Object>> sourceList = result.stream().skip((startPage - 1- (10000/pageSize)) * pageSize).limit(pageSize).parallel().collect(Collectors.toList());
+                List<Map<String, Object>> sourceList = result.stream().parallel().skip((startPage - 1- (10000/pageSize)) * pageSize).limit(pageSize).collect(Collectors.toList());
                 return new EsPage(startPage, pageSize, (int) totalHits, sourceList);
             }
         } else {//浅度排序
@@ -438,7 +438,7 @@ public class ElasticsearchUtil {
                 .actionGet();
         long totalHits = response.getHits().totalHits;
         List<Map<String, Object>> result = disposeScrollResult(response, highlightField);
-        List<Map<String, Object>> sourceList = result.stream().skip((startPage - 1-(10000/pageSize)) * pageSize).limit(pageSize).parallel().collect(Collectors.toList());
+        List<Map<String, Object>> sourceList = result.stream().parallel().skip((startPage - 1-(10000/pageSize)) * pageSize).limit(pageSize).collect(Collectors.toList());
         long end = System.currentTimeMillis();
         System.out.println("耗时: " + (end - begin) + "ms");
         System.out.println("耗时: " + (end - begin) / 1000 + "s");
