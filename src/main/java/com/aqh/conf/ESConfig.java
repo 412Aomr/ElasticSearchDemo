@@ -37,15 +37,20 @@ public class ESConfig {
                     InetAddress.getByName("192.168.0.128"),
                     9301
             );
+            TransportAddress node2 = new InetSocketTransportAddress(
+                    InetAddress.getByName("192.168.0.128"),
+                    9302
+            );
             //es集群配置（自定义配置） 连接自己安装的集群名称
             Settings settings = Settings.builder()
-                    .put("cluster.name", "MyES")
+                    .put("cluster.name", "ESCluster")
                     .put("client.transport.sniff", true)//增加嗅探机制，找到ES集群
                     .put("thread_pool.search.size", Integer.parseInt("5"))//增加线程池个数，暂时设为5
                     .build();
             transportClient = new PreBuiltTransportClient(settings);
             transportClient.addTransportAddress(node);
             transportClient.addTransportAddress(node1);
+            transportClient.addTransportAddress(node2);
         } catch (UnknownHostException e) {
             e.printStackTrace();
             LOGGER.error("elasticsearch TransportClient create error!!", e);
