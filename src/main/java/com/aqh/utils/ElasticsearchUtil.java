@@ -373,7 +373,9 @@ public class ElasticsearchUtil {
         }
         // 设置是否按查询匹配度排序
         searchRequestBuilder.setExplain(true);
-        if (startPage > 9990) {//深度排序 TODO
+        //如果 pageSize是10 那么startPage>9990 (10000-pagesize) 如果 20  那么 >9980 如果 50 那么>9950
+        //深度排序  TODO
+        if (startPage > (10000-pageSize)) {
             searchRequestBuilder.setQuery(query);
             searchRequestBuilder
                     .setScroll(TimeValue.timeValueMinutes(1))
