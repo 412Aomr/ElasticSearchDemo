@@ -29,15 +29,15 @@ public class ESConfig {
         TransportClient transportClient = null;
         try {
             //es集群连接
-            TransportAddress node = new InetSocketTransportAddress(
+            TransportAddress node = new TransportAddress(
                     InetAddress.getByName("192.168.0.128"),
                     9300
             );
-            TransportAddress node1 = new InetSocketTransportAddress(
+            TransportAddress node1 = new TransportAddress(
                     InetAddress.getByName("192.168.0.128"),
                     9301
             );
-            TransportAddress node2 = new InetSocketTransportAddress(
+            TransportAddress node2 = new TransportAddress(
                     InetAddress.getByName("192.168.0.128"),
                     9302
             );
