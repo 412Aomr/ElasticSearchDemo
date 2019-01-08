@@ -2,7 +2,6 @@ package com.aqh.conf;
 
 import org.elasticsearch.client.transport.TransportClient;
 import org.elasticsearch.common.settings.Settings;
-import org.elasticsearch.common.transport.InetSocketTransportAddress;
 import org.elasticsearch.common.transport.TransportAddress;
 import org.elasticsearch.transport.client.PreBuiltTransportClient;
 import org.slf4j.Logger;
@@ -30,16 +29,16 @@ public class ESConfig {
         try {
             //es集群连接
             TransportAddress node = new TransportAddress(
-                    InetAddress.getByName("192.168.0.128"),
+                    InetAddress.getByName("192.168.0.111"),
                     9300
             );
             TransportAddress node1 = new TransportAddress(
-                    InetAddress.getByName("192.168.0.128"),
-                    9301
+                    InetAddress.getByName("192.168.0.112"),
+                    9300
             );
             TransportAddress node2 = new TransportAddress(
-                    InetAddress.getByName("192.168.0.128"),
-                    9302
+                    InetAddress.getByName("192.168.0.113"),
+                    9300
             );
             //es集群配置（自定义配置） 连接自己安装的集群名称
             Settings settings = Settings.builder()
