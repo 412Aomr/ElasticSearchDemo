@@ -5,7 +5,6 @@ import com.aqh.domain.Book;
 import com.aqh.domain.EsModel;
 import com.aqh.utils.ElasticsearchUtil;
 import com.aqh.utils.EsPage;
-import org.apache.catalina.servlet4preview.http.HttpServletRequest;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.time.DateFormatUtils;
 import org.elasticsearch.action.bulk.BulkResponse;
@@ -20,7 +19,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.Date;
 import java.util.List;
@@ -383,5 +382,4 @@ public class TestController {
     public  List<String> getAll(){
         return ElasticsearchUtil.searchAll(indexName);
     }
-
 }
