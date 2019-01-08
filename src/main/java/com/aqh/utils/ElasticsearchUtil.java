@@ -6,11 +6,9 @@ import org.apache.commons.lang3.StringUtils;
 import org.elasticsearch.action.admin.indices.analyze.AnalyzeRequest;
 import org.elasticsearch.action.admin.indices.analyze.AnalyzeResponse;
 import org.elasticsearch.action.admin.indices.create.CreateIndexResponse;
-import org.elasticsearch.action.admin.indices.delete.DeleteIndexResponse;
 import org.elasticsearch.action.admin.indices.exists.indices.IndicesExistsRequest;
 import org.elasticsearch.action.admin.indices.exists.indices.IndicesExistsResponse;
 import org.elasticsearch.action.admin.indices.mapping.put.PutMappingRequest;
-import org.elasticsearch.action.admin.indices.mapping.put.PutMappingResponse;
 import org.elasticsearch.action.bulk.BulkProcessor;
 import org.elasticsearch.action.bulk.BulkRequestBuilder;
 import org.elasticsearch.action.bulk.BulkResponse;
@@ -23,6 +21,7 @@ import org.elasticsearch.action.search.ClearScrollRequest;
 import org.elasticsearch.action.search.SearchRequestBuilder;
 import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.action.search.SearchType;
+import org.elasticsearch.action.support.master.AcknowledgedResponse;
 import org.elasticsearch.action.update.UpdateRequest;
 import org.elasticsearch.client.Requests;
 import org.elasticsearch.client.transport.TransportClient;
@@ -117,9 +116,9 @@ public class ElasticsearchUtil {
         //创建索引
         client.admin().indices().prepareCreate(indexName).execute().actionGet();
         //为索引添加映射
-        PutMappingResponse indexresponse = client.admin().indices().putMapping(putmap).actionGet();
-        LOGGER.info("执行建立成功？" + indexresponse.isAcknowledged());
-        return indexresponse.isAcknowledged();
+        AcknowledgedResponse acknowledgedResponse = client.admin().indices().putMapping(putmap).actionGet();
+        LOGGER.info("执行建立成功？" + acknowledgedResponse.isAcknowledged());
+        return acknowledgedResponse.isAcknowledged();
     }
 
     /**
@@ -145,7 +144,7 @@ public class ElasticsearchUtil {
         if (!isIndexExist(index)) {
             LOGGER.info("Index is not exits!");
         }
-        DeleteIndexResponse dResponse = client.admin().indices().prepareDelete(index).execute().actionGet();
+        AcknowledgedResponse dResponse = client.admin().indices().prepareDelete(index).execute().actionGet();
         if (dResponse.isAcknowledged()) {
             LOGGER.info("delete index " + index + "  successfully!");
         } else {
