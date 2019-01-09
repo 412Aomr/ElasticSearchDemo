@@ -373,7 +373,7 @@ public class ElasticsearchUtil {
         // 设置是否按查询匹配度排序
         searchRequestBuilder.setExplain(true);
         //如果 pageSize是10 那么startPage>9990 (10000-pagesize) 如果 20  那么 >9980 如果 50 那么>9950
-        //深度排序  TODO
+        //深度分页  TODO
         if (startPage > (10000-pageSize)) {
             searchRequestBuilder.setQuery(query);
             searchRequestBuilder
@@ -390,7 +390,7 @@ public class ElasticsearchUtil {
                 List<Map<String, Object>> sourceList = result.stream().parallel().skip((startPage - 1- (10000/pageSize)) * pageSize).limit(pageSize).collect(Collectors.toList());
                 return new EsPage(startPage, pageSize, (int) totalHits, sourceList);
             }
-        } else {//浅度排序
+        } else {//浅度分页
             searchRequestBuilder.setSearchType(SearchType.DFS_QUERY_THEN_FETCH);     // QUERY_THEN_FETCH    QUERY_AND_FETCH  DFS_QUERY_THEN_FETCH
             searchRequestBuilder.setQuery(matchAllQuery());
             searchRequestBuilder.setQuery(query);
@@ -414,7 +414,7 @@ public class ElasticsearchUtil {
         return null;
     }
     /**
-     * 深度排序 分页  从当前页为1001开始
+     * 深度分页  从当前页为1001开始
      * @param: [indexName, esType, startPage, pageSize, highlightField]
      * @return: com.aqh.utils.EsPage
      * @auther: LHL
@@ -568,8 +568,8 @@ public class ElasticsearchUtil {
     public static String ik() {
         StringBuilder stringBuilder = new StringBuilder();
         AnalyzeRequest analyzeRequest = new AnalyzeRequest("entity")
-                .text("书名")
-                .analyzer("standard");  //ik_smart  ik_max_word  standard
+                .text("我是程序媛")
+                .analyzer("ik_max_word");  //ik_smart  ik_max_word  standard
         List<AnalyzeResponse.AnalyzeToken> tokens = client.admin().indices()
                 .analyze(analyzeRequest)
                 .actionGet()
